@@ -42,9 +42,6 @@
     height: 26px;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
 }
 .breadcrumb>li+li:before {
@@ -128,3 +125,4 @@
     border-radius: 50px;
     text-align: center;
 }
+
