@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandControlder;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,5 +32,6 @@ Route::group(['prefix' => 'admin','middleware' => 'adminauth'], function () {
     // Admin Dashboard
     Route::get('dashboard',[AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('brands', BrandControlder::class);
+    Route::resource('category', CategoryController::class);
 });
 

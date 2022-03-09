@@ -39,7 +39,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{route('category.index')}}" class="nav-link {{ request()->routeIs( 'category*')  ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Categories</p>
                             </a>
