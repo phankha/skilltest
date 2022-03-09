@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,3 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [ProductController::class, 'detail'])->name('product.detail');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('admin/login',[AdminAuthController::class, 'getLogin'])->name('adminLogin');
+Route::post('admin/login', [AdminAuthController::class, 'postLogin'])->name('adminLoginPost');
+Route::get('admin/logout', [AdminAuthController::class, 'logout'])->name('adminLogout');
+
+Route::group(['prefix' => 'admin','middleware' => 'adminauth'], function () {
+    // Admin Dashboard
+    Route::get('dashboard',[AdminController::class, 'dashboard'])->name('dashboard');
+});
+
