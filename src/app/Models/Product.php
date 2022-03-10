@@ -36,6 +36,16 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany('App\Models\ProductImages', 'product_images');
+        return $this->hasMany('App\Models\ProductImages', 'product_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        Product::deleting(function ($product) {
+            $product->images()->each(function($image) {
+                $image->delete();
+            });
+        });
     }
 }

@@ -21,8 +21,8 @@ class CreateProductTable extends Migration
             $table->longText('description')->nullable();
             $table->longText('delivery')->nullable();
             $table->longText('guarantees_payment')->nullable();
-            $table->decimal('price')->default(0.00);
-            $table->decimal('special_price')->default(0.00);
+            $table->decimal('price')->default(0.00)->nullable();
+            $table->decimal('special_price')->default(0.00)->nullable();
             $table->timestamps();
         });
     }
