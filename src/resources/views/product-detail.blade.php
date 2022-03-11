@@ -17,7 +17,7 @@
                             @if(count($product->images)>=1)
                             <div class="carousel-inner">
                                 @foreach($product->images as $key => $image)
-                                <div class="carousel-item {{($key==0)?'active':''}}"> <img src="{{ asset('storage'.$image->image) }}" alt="product alt"> </div>
+                                <div class="carousel-item {{($key==0)?'active':''}}"> <img src="{{ asset('storage/'.$image->image) }}" alt="product alt"> </div>
                                 @endforeach
 
                             </div> <!-- Left right --> <a class="carousel-control-prev" href="#product-images" data-slide="prev"> <span class="carousel-control-prev-icon"></span> </a> <a class="carousel-control-next" href="#product-images" data-slide="next"> <span class="carousel-control-next-icon"></span> </a> <!-- Thumbnails -->

@@ -33,7 +33,7 @@ class CategoryController extends Controller
         if (Cache::has('Categories')) {
             $categories = Cache::get('Categories');
         }else{
-            $categories = Cache::rememberForever('Categories', function () {
+            $categories = Cache::remember('Categories',now()->addDay(7), function () {
                 return Category::all();
             });
         }

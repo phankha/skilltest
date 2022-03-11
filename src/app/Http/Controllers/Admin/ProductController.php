@@ -20,7 +20,7 @@ class ProductController extends Controller
         if (Cache::has('Products')) {
             $products = Cache::get('Products');
         }else{
-            $products = Cache::rememberForever('Products', function () {
+            $products = Cache::remember('Products',now()->addDay(7), function () {
                 return Product::all();
             });
         }
@@ -36,14 +36,14 @@ class ProductController extends Controller
         if (Cache::has('Categories')) {
             $categories = Cache::get('Categories');
         }else{
-            $categories = Cache::rememberForever('Categories', function () {
+            $categories = Cache::remember('Categories',now()->addDay(7), function () {
                 return Category::all();
             });
         }
         if (Cache::has('Brands')) {
             $brands = Cache::get('Brands');
         }else{
-            $brands = Cache::rememberForever('Brands', function () {
+            $brands = Cache::remember('Brands',now()->addDay(7), function () {
                 return Brand::all();
             });
         }
@@ -59,16 +59,28 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        $product_id = Product::insertGetId([
-            'name'               =>   $request->name,
-            'category_id'        =>   $request->category_id,
-            'brand_id'           =>   $request->brand_id,
-            'price'              =>   $request->price,
-            'special_price'      =>   $request->special_price,
-            'description'        =>   $request->description,
-            'delivery'           =>   $request->delivery,
-            'guarantees_payment' =>   $request->guarantees_payment,
-        ]);
+//        $product = Product::create([
+//            'name'               =>   $request->name,
+//            'category_id'        =>   $request->category_id,
+//            'brand_id'           =>   $request->brand_id,
+//            'price'              =>   $request->price,
+//            'special_price'      =>   $request->special_price,
+//            'description'        =>   $request->description,
+//            'delivery'           =>   $request->delivery,
+//            'guarantees_payment' =>   $request->guarantees_payment,
+//        ]);
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->price = $request->price;
+        $product->special_price = $request->special_price;
+        $product->description = $request->description;
+        $product->delivery = $request->delivery;
+        $product->guarantees_payment = $request->guarantees_payment ;
+        $product->save();
+        $product_id = $product->id;
 
         if($request->hasfile('images'))
         {
@@ -100,14 +112,14 @@ class ProductController extends Controller
         if (Cache::has('Categories')) {
             $categories = Cache::get('Categories');
         }else{
-            $categories = Cache::rememberForever('Categories', function () {
+            $categories = Cache::remember('Categories',now()->addDay(7), function () {
                 return Category::all();
             });
         }
         if (Cache::has('Brands')) {
             $brands = Cache::get('Brands');
         }else{
-            $brands = Cache::rememberForever('Brands', function () {
+            $brands = Cache::remember('Brands',now()->addDay(7), function () {
                 return Brand::all();
             });
         }

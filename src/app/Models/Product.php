@@ -17,7 +17,7 @@ class Product extends Model
     const TABLE = 'product';
     protected $table = self::TABLE;
     protected $primaryKey = 'id';
-    protected $fillable = ['category_id', 'brand_id', 'description', 'delivery', 'guarantees_payment', 'price', 'special_price', 'featured', 'date', 'extras'];
+    protected $fillable = ['category_id', 'brand_id', 'description', 'delivery', 'guarantees_payment', 'price', 'special_price'];
 
     /*
     |--------------------------------------------------------------------------

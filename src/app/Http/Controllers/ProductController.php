@@ -17,7 +17,7 @@ class ProductController extends Controller
         if (Cache::has('Products')) {
             $products = Cache::get('Products');
         }else{
-            $products = Cache::rememberForever('Products', function () {
+            $products = Cache::remember('Products',now()->addDay(7), function () {
                 return Product::all();
             });
         }

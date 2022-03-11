@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\ProductImages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class demo extends Seeder
 {
@@ -38,21 +40,27 @@ class demo extends Seeder
         ]);
 
         DB::table(ProductImages::TABLE)->insert([
-            'product_id' => $product_id,
-            'image' => 'images/demo/600x450-01.png'
+            [
+                'product_id' => $product_id,
+                'image' => '/images/products/600x450-01.png'
+            ],[
+                'product_id' => $product_id,
+                'image' => '/images/products/600x450-02.png'
+            ],[
+                'product_id' => $product_id,
+                'image' => '/images/products/600x450-03.png'
+            ],[
+                'product_id' => $product_id,
+                'image' => '/images/products/600x450-04.png'
+            ],
         ]);
-        DB::table(ProductImages::TABLE)->insert([
-            'product_id' => $product_id,
-            'image' => 'images/demo/600x450-02.png'
-        ]);
-        DB::table(ProductImages::TABLE)->insert([
-            'product_id' => $product_id,
-            'image' => 'images/demo/600x450-03.png'
-        ]);
-        DB::table(ProductImages::TABLE)->insert([
-            'product_id' => $product_id,
-            'image' => 'images/demo/600x450-04.png'
-        ]);
+        if ( !is_dir( storage_path('app/public/images/products/') ) ) {
+            mkdir(storage_path('app/public/images/products/'), 775, true);
+            copy(public_path('images/demo/600x450-01.png'), storage_path('app/public/images/products/600x450-01.png'));
+            copy(public_path('images/demo/600x450-02.png'), storage_path('app/public/images/products/600x450-02.png'));
+            copy(public_path('images/demo/600x450-03.png'), storage_path('app/public/images/products/600x450-03.png'));
+            copy(public_path('images/demo/600x450-04.png'), storage_path('app/public/images/products/600x450-04.png'));
+        }
 
 
     }

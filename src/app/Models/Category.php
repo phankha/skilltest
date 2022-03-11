@@ -48,8 +48,8 @@ class Category extends Model
     {
         parent::boot();
         Category::created(function ($category) {
-            Cache::set('Categories',Category::all());
-            Cache::set('category_'.$category->id,$category);
+            Cache::put('Categories',Category::all());
+            Cache::put('category_'.$category->id,$category);
         });
         Category::updated(function ($category) {
             Cache::put('Categories',Category::all());

@@ -18,7 +18,7 @@ class BrandControlder extends Controller
         if (Cache::has('Brands')) {
             $brands = Cache::get('Brands');
         }else{
-            $brands = Cache::rememberForever('Brands', function () {
+            $brands = Cache::remember('Brands',now()->addDay(7), function () {
                 return Brand::all();
             });
         }
