@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Product extends Model
 {
@@ -42,10 +43,22 @@ class Product extends Model
     protected static function boot()
     {
         parent::boot();
+        Product::created(function ($product) {
+            Cache::put('Products',Product::all());
+            Cache::put('Product_'.$product->id,$product);
+        });
+        Product::updated(function ($product) {
+            Cache::put('Products',Product::all());
+            Cache::put('Product_'.$product->id,$product);
+        });
         Product::deleting(function ($product) {
             $product->images()->each(function($image) {
                 $image->delete();
             });
+        });
+        Product::deleted(function ($product) {
+            Cache::put('Products',Product::all());
+            Cache::forget('Product_'.$product->id);
         });
     }
 }

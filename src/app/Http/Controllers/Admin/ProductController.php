@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -16,7 +17,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        if (Cache::has('Product')) {
+            $products = Cache::get('Product');
+        }else{
+            $products = Cache::rememberForever('Product', function () {
+                return Product::all();
+            });
+        }
         return view('admin.pages.product.index')
             ->with('products', $products);
     }
@@ -26,8 +33,20 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories =  Category::all();
-        $brands = Brand::all();
+        if (Cache::has('Categories')) {
+            $categories = Cache::get('Categories');
+        }else{
+            $categories = Cache::rememberForever('Categories', function () {
+                return Category::all();
+            });
+        }
+        if (Cache::has('Brands')) {
+            $brands = Cache::get('Brands');
+        }else{
+            $brands = Cache::rememberForever('Brands', function () {
+                return Brand::all();
+            });
+        }
         return view('admin.pages.product.create', compact( 'categories', 'brands'));
     }
 
@@ -78,8 +97,20 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories =  Category::all();
-        $brands = Brand::all();
+        if (Cache::has('Categories')) {
+            $categories = Cache::get('Categories');
+        }else{
+            $categories = Cache::rememberForever('Categories', function () {
+                return Category::all();
+            });
+        }
+        if (Cache::has('Brands')) {
+            $brands = Cache::get('Brands');
+        }else{
+            $brands = Cache::rememberForever('Brands', function () {
+                return Brand::all();
+            });
+        }
         $images = ProductImages::where('product_id',$product->id)->get();
         return view('admin.pages.product.edit',compact('product','categories', 'brands','images'));
     }

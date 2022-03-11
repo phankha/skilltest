@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        if (Cache::has('Categories')) {
+            $categories = Cache::get('Categories');
+        }else{
+            $categories = Cache::remember('Categories',now()->addDay(7), function () {
+                return Category::all();
+            });
+        }
         return view('admin.pages.category.index')
             ->with('categories', $categories);
     }
@@ -23,7 +30,13 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories =  Category::all();
+        if (Cache::has('Categories')) {
+            $categories = Cache::get('Categories');
+        }else{
+            $categories = Cache::rememberForever('Categories', function () {
+                return Category::all();
+            });
+        }
         return view('admin.pages.category.create')->with('categories', $categories);
     }
 
@@ -50,12 +63,16 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories =  Category::all()->except($category->id);
+        if (Cache::has('Categories')) {
+            $categories = Cache::get('Categories')->except($category->id);
+        }else{
+            $categories = Category::all()->except($category->id);
+        }
         return view('admin.pages.category.edit',compact('category','categories'));
     }
 
     /**
-     * Update the brand in storage.
+     * Update the category in storage.
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Category $category
      */
@@ -72,7 +89,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the brand from storage.
+     * Remove the category from storage.
      *
      * @param  \App\Models\Category $category
      */

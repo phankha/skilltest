@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -41,5 +42,22 @@ class Category extends Model
     public function products()
     {
         return $this->hasMany('App\Models\Product');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        Category::created(function ($category) {
+            Cache::set('Categories',Category::all());
+            Cache::set('category_'.$category->id,$category);
+        });
+        Category::updated(function ($category) {
+            Cache::put('Categories',Category::all());
+            Cache::put('category_'.$category->id,$category);
+        });
+        Category::deleted(function ($category) {
+            Cache::forget('category_'.$category->id);
+            Cache::put('Categories',Category::all());
+        });
     }
 }

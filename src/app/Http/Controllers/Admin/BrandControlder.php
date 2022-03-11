@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 
 class BrandControlder extends Controller
@@ -14,7 +15,14 @@ class BrandControlder extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
+        if (Cache::has('Brands')) {
+            $brands = Cache::get('Brands');
+        }else{
+            $brands = Cache::rememberForever('Brands', function () {
+                return Brand::all();
+            });
+        }
+
         return view('admin.pages.brands.index')
             ->with('brands', $brands);
     }
@@ -50,7 +58,6 @@ class BrandControlder extends Controller
      */
     public function edit(Brand $brand)
     {
-        //$brand = Brand::find($id);
         return view('admin.pages.brands.edit',compact('brand'));
     }
 
