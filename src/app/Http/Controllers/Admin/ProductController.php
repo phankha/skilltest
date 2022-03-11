@@ -17,10 +17,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        if (Cache::has('Product')) {
-            $products = Cache::get('Product');
+        if (Cache::has('Products')) {
+            $products = Cache::get('Products');
         }else{
-            $products = Cache::rememberForever('Product', function () {
+            $products = Cache::rememberForever('Products', function () {
                 return Product::all();
             });
         }

@@ -3,7 +3,10 @@
     <div id="product" class="container">
         <ul class="breadcrumb">
             <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
-            <li><a href="#">product name</a></li>
+            @if($product->category_id !=null)
+                <li><a href="#">{{$product->category->name}}</a></li>
+            @endif
+            <li><a href="#">{{$product->name}}</a></li>
         </ul>
         <div class="row">
             <div id="content" class="col-sm-12">
@@ -11,32 +14,39 @@
                     <div class="col-sm-6">
                         <div id="product-images" class="carousel slide" data-bs-ride="carousel" align="center">
                             <!-- slides -->
+                            @if(count($product->images)>=1)
                             <div class="carousel-inner">
-                                <div class="carousel-item active"> <img src="{{ asset('images/demo/600x450-01.png') }}" alt="product alt"> </div>
-                                <div class="carousel-item"> <img src="{{ asset('images/demo/600x450-02.png') }}" alt="product alt"> </div>
-                                <div class="carousel-item"> <img src="{{ asset('images/demo/600x450-03.png') }}" alt="product alt"> </div>
-                                <div class="carousel-item"> <img src="{{ asset('images/demo/600x450-04.png') }}" alt="product alt"> </div>
+                                @foreach($product->images as $key => $image)
+                                <div class="carousel-item {{($key==0)?'active':''}}"> <img src="{{ asset('storage'.$image->image) }}" alt="product alt"> </div>
+                                @endforeach
+
                             </div> <!-- Left right --> <a class="carousel-control-prev" href="#product-images" data-slide="prev"> <span class="carousel-control-prev-icon"></span> </a> <a class="carousel-control-next" href="#product-images" data-slide="next"> <span class="carousel-control-next-icon"></span> </a> <!-- Thumbnails -->
                             <ol class="carousel-indicators list-inline">
-                                <li class="list-inline-item active"> <a id="carousel-selector-0" class="selected" data-bs-slide-to="0" data-bs-target="#product-images"> <img src="{{ asset('images/demo/600x450-01.png') }}" class="img-fluid"> </a> </li>
-                                <li class="list-inline-item"> <a id="carousel-selector-1" data-bs-slide-to="1" data-bs-target="#product-images"> <img src="{{ asset('images/demo/600x450-02.png') }}" class="img-fluid"> </a> </li>
-                                <li class="list-inline-item"> <a id="carousel-selector-2" data-bs-slide-to="2" data-bs-target="#product-images"> <img src="{{ asset('images/demo/600x450-03.png') }}" class="img-fluid"> </a> </li>
-                                <li class="list-inline-item"> <a id="carousel-selector-2" data-bs-slide-to="3" data-bs-target="#product-images"> <img src="{{ asset('images/demo/600x450-04.png') }}" class="img-fluid"> </a> </li>
+                                @foreach($product->images as $key => $image)
+                                <li class="list-inline-item {{($key==0)?'active':''}}"> <a id="carousel-selector-{{$key}}" class="{{($key==0)?'selected':''}}" data-bs-slide-to="{{$key}}" data-bs-target="#product-images"> <img src="{{ asset('storage'.$image->image) }}" class="img-fluid"> </a> </li>
+                                @endforeach
+
                             </ol>
+                            @endif
                         </div>
 
                     </div>
                     <div class="col-sm-6">
-                        <h1>Product name</h1>
-                        <p>Brand: Brand name</p>
+                        <h1>{{$product->name}}</h1>
+                        <p>Brand: {{ ($product->brand_id !=null) ? $product->brand->name : 'None' }}</p>
                         <div class="price">
+                            @if($product->special_price == 0)
+                            <span class="price-new">
+                                <span id="price-special">{{$product->price}}</span>
+                            </span>
+                                <input type="hidden" id="price" value="{{$product->price}}">
+                            @else
 							<span class="price-new">
-								<span id="price-special">$60.00</span>
+								<span id="price-special">{{$product->special_price}}</span>
 							</span>
-                            <input type="hidden" id="price" value="60.00">
-                            <span class="price-old" id="price-old">
-								$77.00
-						   </span>
+                            <input type="hidden" id="price" value="{{$product->special_price}}">
+                            <span class="price-old" id="price-old">€ {{$product->price}}</span>
+                            @endif
                         </div>
                         <div class="col-md-3 d-inline-flex">
                             <div class="input-qty">
@@ -66,9 +76,9 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="tab-description">description</div>
-                                <div class="tab-pane fade" id="delivery" role="tabpanel" aria-labelledby="tab-delivery">delivery</div>
-                                <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="tab-payment">Guarantees Payment</div>
+                                <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="tab-description">{{$product->description}}</div>
+                                <div class="tab-pane fade" id="delivery" role="tabpanel" aria-labelledby="tab-delivery">{{$product->delivery}}</div>
+                                <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="tab-payment">{{$product->guarantees_payment}}</div>
                             </div>
                         </div>
                     </div>

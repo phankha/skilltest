@@ -55,6 +55,9 @@ class Category extends Model
             Cache::put('Categories',Category::all());
             Cache::put('category_'.$category->id,$category);
         });
+        Category::deleting(function ($category) {
+            Product::where('category_id',$category->id)->update(['category_id'=> null]);
+        });
         Category::deleted(function ($category) {
             Cache::forget('category_'.$category->id);
             Cache::put('Categories',Category::all());

@@ -48,6 +48,9 @@ class Brand extends Model
             Cache::put('Brands',Brand::all());
             Cache::put('brand_'.$brand->id,$brand);
         });
+        Brand::deleting(function ($brand) {
+            Product::where('brand_id',$brand->id)->update(['brand_id'=> null]);
+        });
         Brand::deleted(function ($brand) {
             Cache::forget('brand_'.$brand->id);
             Cache::put('Brands',Brand::all());
