@@ -69,6 +69,8 @@
                         <div class="col-md-9 d-inline">
                             <button type="button" id="button-cart" data-loading-text="Loading..." class="btn btn-primary btn-block">Add to Cart</button>
                         </div>
+
+                        <div id="cart-err" class="col-md-12 mt2 mb-2"></div>
                         <div class="col-md-12">
                             <ul class="nav nav-tabs" id="ProductTab" role="tablist">
                                 <li class="nav-item" role="presentation">

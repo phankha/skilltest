@@ -2112,6 +2112,9 @@ $('#button-cart').on('click', function () {
     setTimeout(function () {
       $('#cart > button').html('<span id="cart-total"> ' + qty + ' item(s) - $' + total + '</span>');
     }, 100);
+    $('#cart-err').html('');
+  } else {
+    $('#cart-err').html('<span class="alert-danger" role="alert">Quantity incorrect value</span>');
   }
 });
 

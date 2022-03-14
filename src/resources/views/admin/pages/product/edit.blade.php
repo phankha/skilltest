@@ -16,11 +16,6 @@
         @if ($errors->any())
             <div class="alert alert-danger">
                 <strong>There were some problems with your input.</strong><br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
             </div>
     @endif
     <!-- Main content -->
@@ -35,6 +30,9 @@
                                 <div class="form-group">
                                     <strong>Product name:</strong>
                                     <input type="text" name="name" class="form-control" placeholder="Name" value="{{old('name')?old('name'):$product->name}}">
+                                    @error('name')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <strong>Category</strong>
@@ -53,14 +51,23 @@
                                             <option {{ ($brand->id == $product->brand_id) ? 'selected="selected"' : ''}} value="{{$brand->id}}">{{$brand->name}}</option>
                                         @endforeach
                                     </select>
+                                    @error('brand_id')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <strong>Price:</strong>
                                     <input type="text" name="price" class="form-control" placeholder="Price" value="{{$product->price}}">
+                                    @error('price')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <strong>Special Price:</strong>
                                     <input type="text" name="special_price" class="form-control" placeholder="Special Price" value="{{old('special_price')?old('special_price'):$product->special_price}}">
+                                    @error('special_price')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label>Description:</label>
