@@ -34,14 +34,14 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>Product name:</strong>
-                                    <input type="text" name="name" class="form-control" placeholder="Name">
+                                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{old('name')}}">
                                 </div>
                                 <div class="form-group">
                                     <strong>Category</strong>
                                     <select name="category_id" class="form-control select2" style="width: 100%;">
                                         <option selected="selected" value="">Please choose category</option>
                                         @foreach($categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        <option {{ ($category->id == old('category_id')) ? 'selected="selected"' : ''}} value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -50,7 +50,7 @@
                                     <select name="brand_id" class="form-control select2" style="width: 100%;">
                                         <option selected="selected" value="">Please choose brand</option>
                                         @foreach($brands as $brand)
-                                            <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                            <option {{ ($brand->id == old('brand_id')) ? 'selected="selected"' : ''}} value="{{$brand->id}}">{{$brand->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -60,19 +60,19 @@
                                 </div>
                                 <div class="form-group">
                                     <strong>Special Price:</strong>
-                                    <input type="text" name="special_price" class="form-control" placeholder="Special Price">
+                                    <input type="text" name="special_price" class="form-control" placeholder="Special Price" value="{{(old('special_price')?old('special_price'):0)}}">
                                 </div>
                                 <div class="form-group">
                                     <label>Description:</label>
-                                    <textarea name="description" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea name="description" class="form-control" rows="3" placeholder="Enter ...">{{old('description')}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Delivery:</label>
-                                    <textarea name="delivery" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea name="delivery" class="form-control" rows="3" placeholder="Enter ...">{{old('delivery')}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Guarantees Payment:</label>
-                                    <textarea name="guarantees_payment" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea name="guarantees_payment" class="form-control" rows="3" placeholder="Enter ...">{{old('guarantees_payment')}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile">Images</label>

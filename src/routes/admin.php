@@ -19,7 +19,7 @@ Route::get('logout', [AdminAuthController::class, 'logout'])->name('adminLogout'
 
 Route::group(['middleware' => 'adminauth'], function () {
     // Admin Dashboard
-    Route::get('dashboard',[AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/',[AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('brands', BrandControlder::class);
     Route::resource('category', CategoryController::class);
     Route::resource('products', ProductController::class);

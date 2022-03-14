@@ -34,7 +34,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>Product name:</strong>
-                                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{$product->name}}">
+                                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{old('name')?old('name'):$product->name}}">
                                 </div>
                                 <div class="form-group">
                                     <strong>Category</strong>
@@ -60,19 +60,19 @@
                                 </div>
                                 <div class="form-group">
                                     <strong>Special Price:</strong>
-                                    <input type="text" name="special_price" class="form-control" placeholder="Special Price" value="{{$product->special_price}}">
+                                    <input type="text" name="special_price" class="form-control" placeholder="Special Price" value="{{old('special_price')?old('special_price'):$product->special_price}}">
                                 </div>
                                 <div class="form-group">
                                     <label>Description:</label>
-                                    <textarea name="description" class="form-control" rows="3" placeholder="Enter ...">{{$product->description}}</textarea>
+                                    <textarea name="description" class="form-control" rows="3" placeholder="Enter ...">{{old('description')?old('description'):$product->description}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Delivery:</label>
-                                    <textarea name="delivery" class="form-control" rows="3" placeholder="Enter ...">{{$product->delivery}}</textarea>
+                                    <textarea name="delivery" class="form-control" rows="3" placeholder="Enter ...">{{old('delivery')?old('delivery'):$product->delivery}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Guarantees Payment:</label>
-                                    <textarea name="guarantees_payment" class="form-control" rows="3" placeholder="Enter ...">{{$product->guarantees_payment}}</textarea>
+                                    <textarea name="guarantees_payment" class="form-control" rows="3" placeholder="Enter ...">{{old('guarantees_payment')?old('guarantees_payment'):$product->guarantees_payment}}</textarea>
                                 </div>
                                 <div class="form-group" id="image-list">
                                     <label for="exampleInputFile">Images</label>
@@ -127,7 +127,7 @@
         $('.image-remove').click(function(){
             console.log($(this).attr('data-id'))
             $('#image-list').append('<input type="hidden" name="removeImage[]" value="'+$(this).attr('data-id')+'"> ')
-            $(this).parent().remove();
+            $('#image-'+$(this).attr('data-id')).remove();
         });
 
 

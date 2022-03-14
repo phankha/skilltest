@@ -27,6 +27,13 @@
                                 @endforeach
 
                             </ol>
+                            @else
+                            <div class="carousel-inner">
+                                <div class="carousel-item active"> <img src="{{ asset('images/600x450-no-image.png') }}" alt="product alt"> </div>
+                            </div> <!-- Left right --> <a class="carousel-control-prev" href="#product-images" data-slide="prev"> <span class="carousel-control-prev-icon"></span> </a> <a class="carousel-control-next" href="#product-images" data-slide="next"> <span class="carousel-control-next-icon"></span> </a> <!-- Thumbnails -->
+                                <ol class="carousel-indicators list-inline">
+                                        <li class="list-inline-item active"> <a id="carousel-selector-0" class="selected}}" data-bs-slide-to="0" data-bs-target="#product-images"> <img src="{{ asset('images/600x450-no-image.png') }}" class="img-fluid"> </a> </li>
+                                </ol>
                             @endif
                         </div>
 
@@ -53,11 +60,10 @@
                                 <span class="pe-2">Amount</span>
                                 <div class="qty-minus" onclick="if ($(this).parent('.input-qty').find('#qty-input').val()>1) { $(this).parent('.input-qty').find('#qty-input').val(parseInt($(this).parent('.input-qty').find('#qty-input').val())-1).change(); }">-</div>
                                 <div class="qty-input-div">
-                                    <input id="qty-input" type="text" name="quantity" value="1" class="form-control input-sm text-center">
+                                    <input id="qty-input" type="number" min="1" name="quantity" value="1" class="form-control input-sm text-center">
                                 </div>
                                 <div class="qty-plus" onclick="$(this).parent('.input-qty').find('#qty-input').val(parseInt($(this).parent('.input-qty').find('#qty-input').val())+1).change();">+</div>
                             </div>
-
 
                         </div>
                         <div class="col-md-9 d-inline">

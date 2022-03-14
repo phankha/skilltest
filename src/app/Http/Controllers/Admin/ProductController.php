@@ -58,17 +58,10 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'brand_id' => 'required',
+            'price' => 'required|numeric|gt:0',
+            'special_price'=> 'numeric|min:0'
         ]);
-//        $product = Product::create([
-//            'name'               =>   $request->name,
-//            'category_id'        =>   $request->category_id,
-//            'brand_id'           =>   $request->brand_id,
-//            'price'              =>   $request->price,
-//            'special_price'      =>   $request->special_price,
-//            'description'        =>   $request->description,
-//            'delivery'           =>   $request->delivery,
-//            'guarantees_payment' =>   $request->guarantees_payment,
-//        ]);
 
         $product = new Product();
         $product->name = $request->name;
@@ -137,9 +130,20 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'brand_id' => 'required',
+            'price' => 'required|numeric|gt:0',
+            'special_price'=> 'numeric|min:0'
         ]);
 
-        $product->update($request->all());
+        $product->name = $request->name;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->price = $request->price;
+        $product->special_price = $request->special_price;
+        $product->description = $request->description;
+        $product->delivery = $request->delivery;
+        $product->guarantees_payment = $request->guarantees_payment ;
+        $product->update();
 
         // remove old image
         if($request->removeImage){
